@@ -189,7 +189,7 @@ session.commit()
 
 
 #------category  Musical Instruments : Band & Orchestra : Orchestral Strings-----
-cat6 = Category(t_userId=1, t_catName=" Musical Instruments : Band & Orchestra : Orchestral Strings")
+cat6 = Category(t_userId=1, t_catName=" Musical Instruments")
 session.add(cat6)
 session.commit()
 
@@ -257,3 +257,34 @@ cat7item7 = Item(t_userId=1, t_itemName="My Hero One's Justice", t_itemDescripti
 session.add(cat7item7)
 session.commit()
 #----------------------end category videogames---------------------------------
+
+#--------------- random adds---------------------------------------------------
+
+
+cat1Item8 = Item(t_userId=1, t_itemName="Panda Wireless PAU09 N600 Dual Band (2.4GHz and 5GHz) Wireless N USB Adapter W/ Dual 5dBi Antennas", t_itemDescription="Elit sint anim reprehenderit irure adipisicing labore mollit. Enim ex eu veniam fugiat velit duis consequat do id laborum veniam enim velit pariatur. Eiusmod deserunt non aliqua voluptate duis consectetur dolor ea dolor sunt do. Fugiat consectetur qui nostrud ea nisi culpa anim quis nulla proident velit. Labore sint commodo nisi eu commodo adipisicing ea enim consectetur mollit commodo aute eu labore. Ipsum nulla velit duis et fugiat excepteur ex qui quis ut fugiat incididunt incididunt occaecat. Ex eu dolore occaecat deserunt voluptate.", t_relationC=cat1)
+session.add(cat1Item8)
+session.commit()
+
+cat2Item8 = Item(t_userId=1, t_itemName="Timken 510050 Wheel Bearing", t_itemDescription="Qui in laboris exercitation Lorem est ipsum id deserunt qui laboris tempor. Deserunt veniam ipsum ullamco aliquip anim amet exercitation in ullamco sint labore magna et. Consectetur ex ipsum cillum adipisicing reprehenderit adipisicing voluptate. Laborum est voluptate excepteur pariatur minim officia sint id id dolore nulla velit deserunt. Nisi aliqua sunt dolor aliquip nostrud ea magna labore enim cupidatat dolore eu. Culpa Lorem sint pariatur et labore minim occaecat incididunt pariatur minim tempor pariatur reprehenderit.", t_relationC=cat2)
+session.add(cat2Item8)
+session.commit()
+
+cat3item8 = Item(t_userId=1, t_itemName="Seoul Ceuticals Korean Skin Care Snail Repair Cream Moisturizer - 97.5% Snail Mucin Extract ", t_itemDescription="Anim commodo cupidatat irure esse consectetur irure magna. Proident ad est aliqua exercitation. Adipisicing amet sit id elit exercitation ad laborum ipsum id elit consequat eu eiusmod. Elit exercitation esse velit in consequat commodo nostrud. Ex et pariatur cupidatat anim consectetur consequat exercitation consequat tempor nisi qui. Non aliqua ex ex mollit.", t_relationC=cat3)
+session.add(cat3item8)
+session.commit()
+
+cat4item8 = Item(t_userId=1, t_itemName="The Art of Deception: Controlling the Human Element of Security", t_itemDescription="Nisi dolore veniam deserunt deserunt commodo adipisicing dolor non aute duis. Eiusmod nostrud irure sint culpa anim reprehenderit sunt nostrud excepteur non. Incididunt esse deserunt consectetur incididunt cillum sunt ad qui veniam. Exercitation esse reprehenderit amet aliqua mollit dolor sunt minim culpa. Pariatur qui in ut laborum id aliqua ex magna occaecat eiusmod duis Lorem laborum est. Nisi aliquip adipisicing sit do amet officia.", t_relationC=cat4)
+session.add(cat4item8)
+session.commit()
+
+cat5item8 = Item(t_userId=1, t_itemName="Visual Studio Professional 2017", t_itemDescription="Lorem dolore ex in excepteur sint Lorem. Nisi minim dolore Lorem fugiat dolore nisi eu est ex. Commodo mollit exercitation consequat excepteur amet reprehenderit dolore adipisicing labore eu nulla. Laboris laborum id est tempor fugiat. Aute ex enim in aliqua eiusmod proident duis aute aliquip magna tempor minim. Et enim sint pariatur quis velit.", t_relationC=cat5)
+session.add(cat5item8)
+session.commit()
+
+cat6item8 = Item(t_userId=1, t_itemName="Ohuhu Legend of Zelda Ocarina 12 Hole Alto C with Textbook Display Stand Protective Bag", t_itemDescription="Eu aliqua veniam id excepteur tempor deserunt commodo. Aliquip mollit adipisicing id cupidatat ex voluptate voluptate occaecat id excepteur do. Mollit proident ex amet occaecat sint et proident ea veniam ex excepteur culpa. Labore velit laboris quis fugiat labore minim dolore non do amet occaecat incididunt proident. Consectetur id nostrud sunt laborum ex nulla eu in incididunt nulla cupidatat laborum fugiat. Do et anim fugiat et id. Esse eiusmod culpa adipisicing reprehenderit mollit ex anim consectetur irure.", t_relationC=cat6)
+session.add(cat6item8)
+session.commit()
+
+cat7item8 = Item(t_userId=1, t_itemName="Mega Man 11 - PlayStation 4", t_itemDescription="Mega man returns! the newest entry in this iconic series blends classic, challenging 2D platforming action with a fresh new visual style. The new double Gear system boosts Mega Man's speed and power for a new twist to the satisfying gameplay the series is known for. Long-await sequel evil genius Dr. Wily is back to his mischievous ways and invest in an ambitious idea from his time at robot university. The benevolent Dr. Light decides to upgrade Mega man with wily's powerful prototype known as the double Gear system, expanding his abilities for the greatest fight yet for everlasting peace. A visual leap taking a leap forward in visual presentation, the new game features a 2.5D design direction which blends beautiful, hand-drawn environments with lively characters. New to the classic series, Mega man now also takes on characteristics of defeated robot masters when wielding their weapons. Powerful new gameplay Options the double Gear system adds a unique new twist on the satisfying platforming action, offering Options to enhance Mega Man's speed and power on the fly. For vets and first-timers a wealth of difficulty Options are available for a player of any platformer skill level. Controls for an on-screen", t_relationC=cat7)
+session.add(cat7item8)
+session.commit()

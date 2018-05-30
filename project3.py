@@ -27,7 +27,7 @@ session = DBSession()
 @app.route('/CatalogApp')
 def mainPage():
     categories = session.query(Category).all()
-    latestItems = session.query(Item).order_by(desc(Item.t_id)).limit(6)
+    latestItems = session.query(Item).order_by(desc(Item.t_id)).limit(7)
     return render_template('main.html', mainCategories = categories, mainItems = latestItems)
 
 
