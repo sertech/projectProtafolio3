@@ -32,14 +32,25 @@ def mainPage():
 
 
 
-@app.route('/CatalogApp/<category_name>/items')
+@app.route('/CatalogApp/<category_name>/items', methods=['GET', 'POST'])
 def catPage(category_name):
-    return "this page will display all the categories in one panel and in the second panel it will display all the items in the selected category also it will display the number of items within a category"
+    categories = session.query(Category).all()
+    for cati in categories:
+        if cati.t_catName == category_name:
+            catx = cati.t_id
+            
+
+    latestItems = session.query(Item).filter_by(t_catId=catx)
+    totalItems = session.query(Item).filter_by(t_catId=catx).count()
+    print(totalItems)
+    return render_template('categoryX.html', catpageCatName=category_name, catpageItems=latestItems, catpageCategories=categories, t_items=totalItems)
 
 
-@app.route('/CatalogApp/<category_name>/<item_name>')
+@app.route('/CatalogApp/<category_name>/<item_name>', methods=['GET', 'POST'])
 def itemPage(category_name, item_name):
-    return "this page will display the item complete description"
+    itemX = session.query(Item).filter_by(t_itemName=item_name).first()
+        
+    return render_template('itemDesc.html', itempage=itemX)
 
 if __name__ == '__main__':
     app.debug = True
