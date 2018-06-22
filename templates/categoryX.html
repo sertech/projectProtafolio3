@@ -9,12 +9,19 @@
         .content, .sidebar{
             display: inline-block;
         }
+        #top_title{
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
-    <div class="title" style="background-color:cadetblue">
-        <h1>Catalog App</h1>
-    </div>
+        <div class="top_banner" style="background-color:cadetblue">
+                <h1 id="top_title"> 
+                    <span>Catalog App</span>      
+                    <a href="http://">login</a>
+                </h1>
+            </div>
     
     <div class="container">
         <div class="content">
@@ -27,6 +34,9 @@
         </div>
         <div class="sidebar">
             <h1>{{catpageCatName}} ({{t_items}} items)</h1>
+            <h2>
+                    <a href="{{url_for('newItemPage',category_name=catpageCatName)}}">New Item</a>
+            </h2> 
             {% for item in catpageItems %}
                 <p>
                 <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}">{{item.t_itemName}}</a>

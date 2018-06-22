@@ -45,12 +45,29 @@ def catPage(category_name):
     print(totalItems)
     return render_template('categoryX.html', catpageCatName=category_name, catpageItems=latestItems, catpageCategories=categories, t_items=totalItems)
 
+@app.route('/CatalogApp/<category_name>/new_item', methods=['GET', 'POST'])
+def newItemPage(category_name):
+    categories = session.query(Category).all()
+    for cati in categories:
+        if cati.t_catName == category_name:
+            catx = cati.t_id
+        
+    if request.method == 'POST':
+        new_item = Item(t_itemName=request.form['item_name'], t_itemDescription=request.form['i_description'], t_userId=1,t_catId=catx)
+        session.add(new_item)
+        session.commit()
+        return redirect(url_for('mainPage'))
+        
+    else: # the method used in this call is GET
+        print("this is a get call")
+        return render_template('newItem.html', current_cat=category_name)
+    
 
 @app.route('/CatalogApp/<category_name>/<item_name>', methods=['GET', 'POST'])
 def itemPage(category_name, item_name):
     itemX = session.query(Item).filter_by(t_itemName=item_name).first()
         
-    return render_template('itemDesc.html', itempage=itemX)
+    return render_template('itemDesc.html', itempage=itemX, category_name=category_name)
 
 if __name__ == '__main__':
     app.debug = True

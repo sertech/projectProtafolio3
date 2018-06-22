@@ -9,11 +9,19 @@
         .content, .sidebar{
             display: inline-block;
         }
+        #top_title{
+            display: flex;
+            justify-content: space-between;
+        }
+       
     </style>
 </head>
 <body>
-    <div class="title" style="background-color:cadetblue">
-        <h1>Catalog App</h1>
+    <div class="top_banner" style="background-color:cadetblue">
+        <h1 id="top_title"> 
+            <span>Catalog App</span>      
+            <a href="http://">login</a>
+        </h1>
     </div>
     
     <div class="container">
@@ -26,15 +34,21 @@
             {% endfor %}            
         </div>
         <div class="sidebar">
-            <h1>latest items</h1>
+            <h2>latest items</h2>
+            
             {% for item in mainItems %}
                 <p>
-                <a href="http://">{{item.t_itemName}}</a>
+                
                 {% for cati in mainCategories %}
                     {% if cati.t_id == item.t_catId %}
+                    
+                    <a href="{{url_for('itemPage',category_name=cati.t_catName,item_name=item.t_itemName)}}">{{item.t_itemName}}</a>
+
                     ({{cati.t_catName}})
+
                     {% endif %}
                 {% endfor %}
+                
                 </p>
             {% endfor %}
         </div>
