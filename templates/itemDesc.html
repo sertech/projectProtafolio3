@@ -15,7 +15,7 @@
             <h1>{{category_name}} -- {{itempage.t_itemName}}</h1>
             <p>{{itempage.t_itemDescription}}</p>
             <p>
-                <a href="">edit</a> | <a href="">delete</a>
+                <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}">edit</a> | <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}">delete</a>
             </p>
             
     </div>

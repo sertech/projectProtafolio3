@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        label {
+            display:block;
+        }
+        #id_newName, #id_newDesc {
+            display:block;
+        }
+        #itemDesc, #itemName, #itemCat {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="title" style="background-color:cadetblue">
+        <h1>Catalog App</h1>
+    </div>
+    <form action="{{url_for('deleteItemPage',item_name=current_item.t_itemName)}}" method="post">
+        <fieldset>
+            <legend>Delete Item Page</legend>
+            <p>
+                <label for="itemCat">Item Category</label>
+                <textarea name="itemCat" id="itemCat" cols="70" rows="2" placeholder="{{current_cat.t_catName}}" disabled></textarea>
+            </p>
+            <p>
+                <label for="itemName">Title or name</label>
+                <textarea id="itemName" name="itemName" cols="70" rows="2" placeholder="{{current_item.t_itemName}}" disabled></textarea>
+            </p>
+            <p>
+                <label for="itemDesc">Discription</label>
+                <textarea id="itemDesc" name="itemDesc" cols="70" rows="10" placeholder="{{current_item.t_itemDescription}}" disabled></textarea>
+            </p>
+            
+            <input type="submit" value="Delete">
+        </fieldset>
+    </form>   
+</body>
+</html>

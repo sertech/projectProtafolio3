@@ -69,6 +69,52 @@ def itemPage(category_name, item_name):
         
     return render_template('itemDesc.html', itempage=itemX, category_name=category_name)
 
+@app.route('/CatalogApp/<item_name>/edit', methods=['GET', 'POST'])
+def editItemPage(item_name):
+    edit_item = session.query(Item).filter_by(t_itemName=item_name).one()
+    categories = session.query(Category).all()
+    for cati in categories:
+        if cati.t_id == edit_item.t_catId:
+            catx = cati
+    
+    if request.method == 'POST':
+        # values received
+        print("receiving values from the form")
+        print("item name: %s" % request.form['newItemName'])
+        print("item description: %s" % request.form['newDescription'])
+        print("item catid: %s" % request.form['categories'])
+        
+
+        edit_item.t_itemName = request.form['newItemName']
+        edit_item.t_itemDescription = request.form['newDescription']
+        edit_item.t_userId = 1
+        edit_item.t_catId = int(request.form['categories'])
+        session.add(edit_item)
+        session.commit()
+        return redirect(url_for('mainPage'))
+
+
+    else:
+        print("this is the GET call and its the first part to run")
+        return render_template('editItem.html', current_item=edit_item, current_cat=catx)
+        
+    return "render_template('itemDesc.html') "  
+
+@app.route('/CatalogApp/<item_name>/delete', methods=['GET', 'POST'])
+def deleteItemPage(item_name):
+    delete_item = session.query(Item).filter_by(t_itemName=item_name).one()
+    categories = session.query(Category).all()
+    for cati in categories:
+        if cati.t_id == delete_item.t_catId:
+            catx = cati
+
+    if request.method == 'POST':
+        session.delete(delete_item)
+        session.commit()
+        return  redirect(url_for('mainPage'))
+    else:
+        return render_template('deleteItem.html', current_item=delete_item, current_cat=catx)
+    
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
