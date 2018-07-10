@@ -6,33 +6,22 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .content, .sidebar{
-            display: inline-block;
-        }
         #top_title{
             display: flex;
             justify-content: space-between;
         }
-       
     </style>
 </head>
 <body>
     <div class="top_banner" style="background-color:cadetblue">
         <h1 id="top_title"> 
             <span>Catalog App</span>      
-            <span>
-                    {{current_user}} |
-                    <a href="{{url_for('logout')}}">logout</a>
-            </span>
+            <a href="{{url_for('login')}}">login</a>
         </h1>
     </div>
     <div class="itemDesc">
             <h1>{{category_name}} -- {{itempage.t_itemName}}</h1>
             <p>{{itempage.t_itemDescription}}</p>
-            <p>
-                <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}">edit</a> | <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}">delete</a>
-            </p>
-            
     </div>
 </body>
 </html>

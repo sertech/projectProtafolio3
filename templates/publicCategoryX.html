@@ -13,42 +13,35 @@
             display: flex;
             justify-content: space-between;
         }
-       
     </style>
 </head>
 <body>
-    <div class="top_banner" style="background-color:cadetblue">
-        <h1 id="top_title"> 
-            <span>Catalog App</span>      
-            <a href="http://">login</a>
-        </h1>
-    </div>
+        <div class="top_banner" style="background-color:cadetblue">
+                <h1 id="top_title"> 
+                    <span>Catalog App Specific category</span>      
+                    <a href="{{url_for('login')}}">login</a>
+                </h1>
+            </div>
     
     <div class="container">
         <div class="content">
             <h1>Categories</h1>
-            {% for htmlCategory in mainCategories %}
+            {% for htmlCategory in catpageCategories %}
                 <p>
                     <a href="{{url_for('catPage', category_name=htmlCategory.t_catName)}}">{{htmlCategory.t_catName}}</a>
                 </p>
             {% endfor %}            
         </div>
         <div class="sidebar">
-            <h2>latest items</h2>
-            
-            {% for item in mainItems %}
+            <h1>{{catpageCatName}} ({{t_items}} items)</h1>
+            {% for item in catpageItems %}
                 <p>
-                
-                {% for cati in mainCategories %}
+                <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}">{{item.t_itemName}}</a>
+                {% for cati in catpageCategories %}
                     {% if cati.t_id == item.t_catId %}
-                    
-                    <a href="{{url_for('itemPage',category_name=cati.t_catName,item_name=item.t_itemName)}}">{{item.t_itemName}}</a>
-
                     ({{cati.t_catName}})
-
                     {% endif %}
                 {% endfor %}
-                
                 </p>
             {% endfor %}
         </div>
