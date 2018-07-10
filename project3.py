@@ -199,7 +199,7 @@ def editItemPage(item_name):
 @app.route('/CatalogApp/<item_name>/delete', methods=['GET', 'POST'])
 
 def deleteItemPage(item_name):
-    if 'user_mail' in login_session:
+    if 'user_email' in login_session:
         delete_item = session.query(Item).filter_by(t_itemName=item_name).one()
         categories = session.query(Category).all()
         for cati in categories:
@@ -215,7 +215,11 @@ def deleteItemPage(item_name):
             return render_template('deleteItem.html', current_item=delete_item, current_cat=catx, current_user=login_session['user_email'])
     else:
         return redirect(url_for('login'))
-    
+
+@app.route('/CatalogApp/JSON')
+def allCatalogJSON():
+    products = session.query(Item).all()
+    return jsonify(allproducts=[p.serialize for p in products])    
     
 if __name__ == '__main__':
     app.secret_key = 'do not share this baby'

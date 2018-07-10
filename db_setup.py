@@ -92,9 +92,10 @@ class Item(Base):
     t_relationC = relationship(Category)    
     
     @property
-    def serialze(self):
+    def serialize(self):
         """ Return object data in a easily serializeable format """
         return {
+            'id': self.t_id,
             'name': self.t_itemName,
             'description': self.t_itemDescription
         }
