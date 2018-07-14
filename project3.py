@@ -75,11 +75,13 @@ def login():
             print(login_session['user_picture'])
             print(login_session['user_id'])
             
-            return render_template('privateMain.html', mainCategories = categories, mainItems = latestItems, current_user=current_user.t_email)
-                   
+            return render_template('privateMain.html', mainCategories = categories, mainItems = latestItems, current_user=current_user.t_email)                   
+        else:
+            print("Error in login credentials")
+            return render_template('login.html') 
     else:
-        print("Error in login credentials")
-        return render_template('login.html') 
+        print("this is the GET and first response")
+        return render_template('login.html')
 
 @app.route('/logout')
 def logout():

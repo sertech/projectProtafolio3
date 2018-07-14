@@ -1,209 +1,159 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Catalog App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!--___________________google sign in prerequisites UDA__________________-->
-
-    <!-- 1 Load the Google Platform Library -->
-    <script src="https://apis.google.com/js/platform.js?onload=start"></script>
-
-    <!-- 2 load Google CDN (Content Delivery Network)-->
+    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- 3 load the client ID-->
-    <script>
-        gapi.load('auth2', function(){
-            auth2 = gapi.auth2.init({
-                client_id:'187369319178-db3ouuu8aup2phh4q2iujmblfobn9r6j.apps.googleusercontent.com'
-            });
-        });
-    </script>
-    
-    <!-- ______________END google sign in prerequisites UDA__________________-->
-
-
-    <!--_____________METHOD 1 google sign in prerequisites __________________-->
-
-    <!-- specify app's client ID -->
-    <meta name="google-signin-client_id" content="187369319178-db3ouuu8aup2phh4q2iujmblfobn9r6j.apps.googleusercontent.com">
-
-    <!-- 1 Load the Google Platform Library -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-    <!-- 2 load Google CDN (Content Delivery Network)-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        function onSignIn(googleUser)
-        {
-            var profile=googleUser.getBasicProfile();
-            // j query part to target the google button
-            $(".g-signin2").css("display","none");
-            $(".userdata").css("display",'block'); 
-            $("#pic").attr('src',profile.getImageUrl());
-            $("#email").text(profile.getEmail());
-
-        }
-        function signOut()
-        {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function(){
-                alert("you have been successfully signed out");
-                $(".g-signin2").css("display","block");
-                $(".userdata").css("display",'none');
-
-            });
-        }
-    </script>
-    
-    <!-- _________METHOD 1 END google sign in prerequisites__________________-->
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <style>
-        #top_title{
-            display: flex;
-            justify-content: space-between;
-        }
-        .g-signin2{
-            margin-left: 10px;
-            margin-top: 20px;
-        }
-        .userdata{
-            display: none;
-        }
-        /* for local login */
-        *{
+        * {
             box-sizing: border-box;
         }
 
-        /* Create two equal columns that floats next to each other */
-        .column{
-            float:left;
-            width: 50%;
-            padding: 10px;
+        body {
+            margin: 0;
+            font-family: Arial;
         }
-        /* Clear floats after the columns */
-        .row::after{
-            content: "";
-            display: table;
-            clear: both;
+
+        .header {
+            overflow: hidden;
+            background-color: #f1f1f1;
+            padding: 20px 10px;
         }
-        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-        @media screen and (max-width: 600px){
-            .column{
-                width: 100%;
+
+        .header a {
+            float: left;
+            color: black;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            line-height: 25px;
+            border-radius: 4px;
+        }
+
+        .header a.logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .header a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .header a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .header-right {
+            float: right;
+        }
+
+        @media screen and (max-width: 500px) {
+            .header a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+            .header-right {
+                float: none;
             }
         }
-        /* END local login */
+
+        h1 {
+            display: inline;
+        }
+        .container{
+            max-width: 750px;
+        }
+        /* Set black background color, white text and some padding */
     </style>
-
 </head>
+
 <body>
-    <div class="top_banner" style="background-color:cadetblue">
-        <h1 id="top_title"> 
-            <span>Catalog App</span>      
-            
-        </h1>
-    </div>
-<!-- ______________________local login_____________________________________-->   
-    <div class="row">
-        <div class="column">
-            <form action="{{url_for('login')}}" method="POST">
-                    <fieldset>
-                        <legend>Local login</legend>
-                            <p>
-                                <label for="usermail">Email</label>
-                                <input id="usermail" name="usermail" type="text" placeholder="registered email address">
-                            </p>
-                            <p>
-                                <label for="userpass">password</label>
-                                <input id="userpass" name="userpass" type="password">
-                            </p>
-                            <input type="submit" value="Login">
-                    </fieldset>
-                    <br>
-            </form>
-        </div>
-        <div class="column">
-            <form action="{{url_for('new_user')}}" method="post">
-                <fieldset>
-                    <legend>Local Register</legend>
-                        <p>
-                            <label for="newusername">User Name</label>
-                            <input id="newusername" name="newusername" type="text" placeholder="username">
-                        </p>
-                        <p>
-                            <label for="newusermail">Email</label>
-                            <input id="newusermail" name="newusermail" type="text" placeholder="registered email address">
-                        </p>
-                        <label for="userpic">User Picture</label>
-                            <input id="userpic" name="userpic" type="text" placeholder="Not Available" readonly>
-                        <p>
-                            <label for="newuserpass">password</label>
-                            <input id="newuserpass" name="newuserpass" type="password">
-                        </p>
-                        <input type="submit" value="Register">
-                    </fieldset>
-                    <br>
-            </form>
-        </div>
-    </div>
-    
-<!-- ______________________end local login___________________________________--> 
-    
-    <fieldset>
-        <legend>METHOD 1 google sign-in</legend>
-        <div id="result2">method 1</div>
-        <!-- 
-            onSignIn is a function that must be program in a js script
-            or a script tag in the same hmtl file the same goes for signOut()
-        -->
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <div class="userdata">
-            <p>Profile Details</p>
-            <img id="pic" class="img-circle" width="100" height="100"/>
-            <p>Email Address</p>
-            <p id="email" class="alert alert-danger"></p>
-            <button onclick="signOut()" class="btn btn-danger">Sign-Out</button>
-        </div>
-    </fieldset>
-    <br>
-    
+    <div class="header">
+        <a href="{{url_for('mainPage')}}" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-home"></span> Catalog App
+        </a>
 
-    <fieldset>
-        <legend>UDACITY google sign-in method</legend>
-        <div id="result">uda login method</div>
-        <button class="g-signin2" id="signinButton">Google sign-in</button>
-        <script>
-            $('#signinButton').click(function(){
-                auth2.grantOfflineAccess({'redirect_uri':'postmessage'}).then(signInCallback);
-            });
-        </script>
-        <!-- END google button uda button sample -->
+    </div>
 
-        <!-- Google sign in CODE-->
-        <script>
-            function signInCallback(json){
-                console.log('funtion signInCallback(json) this json');
-                console.log(json);
-                // authResult = JSON.parse(json);
-                authResult = json;
-                console.log('contents of authResult = json')
-                console.log(authResult)
-                if(authResult['code']){
-                    // hide the sign in button
-                    $('#signinButton').attr('style', 'display:none');
-                    // show the one time code
-                    $('#result').html('One time auth code from google:</br>' + authResult['code'] + '');
-                }
-            }
-        </script>
-    </fieldset>
-    <!-- google button uda button sample -->
-    
-    
-    
+    <div class="container">
+
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Login</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="{{url_for('login')}}" method="POST">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Email:</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="usermail" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="pwd">Password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="userpass" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Register</h4>
+                </div>
+                <div class="panel-body">
+                    <form action="{{url_for('new_user')}}" method="post">
+                        <div class="form-group">
+                            <label for="usr">Name:</label>
+                            <input type="text" class="form-control" id="usr" name="newusername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">email</label>
+                            <input type="email" class="form-control" id="usr" name="newusermail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">picture</label>
+                            <input type="text" class="form-control" id="usr" placeholder="No Image module set yet" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="pwd" name="newuserpass" required>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
 </body>
+
 </html>

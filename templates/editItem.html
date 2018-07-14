@@ -1,62 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        label {
-            display:block;
-        }
-        #id_newName, #id_newDesc {
-            display:block;
-        }
-        .content, .sidebar{
-            display: inline-block;
-        }
-        #top_title{
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-</head>
-<body>
-    <div class="top_banner" style="background-color:cadetblue">
-        <h1 id="top_title"> 
-            <span>Catalog App</span>      
-            <span>
-                    {{current_user}} |
-                    <a href="{{url_for('logout')}}">logout</a>
-            </span>
-        </h1>
+{% extends "startPrivate.html" %}
+{% block content %}
+
+
+    <h2>Current Catagory: {{current_cat.t_catName}}</h2>
+    <div class="panel-group">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">Current Name: {{current_item.t_itemName}}</div>
+            <div class="panel-body">
+
+                <form action="{{url_for('editItemPage',item_name=current_item.t_itemName)}}" method="post">
+                    <div class="form-group">
+                        <label for="id_newName">New Item Name</label>
+                        <input type="text" class="form-control" id="id_newName" name="newItemName" placeholder="New item name.." required>
+                    </div>                    
+
+                    <div class="form-group">
+                        <label for="id_newDesc">New Discription</label>
+                        <textarea id="id_newDesc" class="form-control" name="newDescription" cols="70" rows="10" placeholder="please enter the product description" required></textarea>
+
+                    </div>   
+                    
+                    <div class="form-group">
+
+                        <label for="id_newCat">New Category</label>
+                        <select name="categories" id="id_newCat">
+                            <option value="1">Device Accessories</option>
+                            <option value="2">Automotive and Powersports</option>
+                            <option value="3">Beauty</option>
+                            <option value="4">Books</option>
+                            <option value="5">PC Software</option>
+                            <option value="6">Musical Instruments</option>
+                            <option value="7">video games</option>
+                        </select>
+                        
+                    </div>
+                    <input type="submit" class="btn btn-default" value="Submit">                    
+                </form>  
+
+            </div>
+        </div>
+
     </div>
-    <form action="{{url_for('editItemPage',item_name=current_item.t_itemName)}}" method="post">
-        <fieldset>
-            <legend>Edit Item: {{current_item.t_itemName}} Current category: {{current_cat.t_catName}}</legend>
-            <p>
-                <label for="id_newName">Title or name</label>
-                <input type="text" id="id_newName" name="newItemName" placeholder="New item name.." required>
-            </p>
-            <p>
-                <label for="id_newDesc">Discription</label>
-                <textarea id="id_newDesc" name="newDescription" cols="70" rows="10" placeholder="please enter the product description" required></textarea>
-            </p>
-            <p>
-                <label for="id_newCat">New Category</label>
-                <select name="categories" id="id_newCat">
-                    <option value="1">Device Accessories</option>
-                    <option value="2">Automotive and Powersports</option>
-                    <option value="3">Beauty</option>
-                    <option value="4">Books</option>
-                    <option value="5">PC Software</option>
-                    <option value="6">Musical Instruments</option>
-                    <option value="7">video games</option>
-                </select>
-            </p>
-            <input type="submit" value="Submit">
-        </fieldset>
-    </form>   
-</body>
-</html>
+
+
+    
+
+{% endblock %}
 

@@ -1,38 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .content, .sidebar{
-            display: inline-block;
-        }
-        #top_title{
-            display: flex;
-            justify-content: space-between;
-        }
-       
-    </style>
-</head>
-<body>
-    <div class="top_banner" style="background-color:cadetblue">
-        <h1 id="top_title"> 
-            <span>Catalog App</span>      
-            <span>
-                    {{current_user}} |
-                    <a href="{{url_for('logout')}}">logout</a>
-            </span>
-        </h1>
+{% extends "startPrivate.html" %}
+{% block content %}
+
+
+
+    <h2>Category: {{category_name}}</h2>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{itempage.t_itemName}}</div>
+            <div class="panel-body">{{itempage.t_itemDescription}}</div>   
+
+        </div>
+
+        <br>
+
+        <span>
+            <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}" class="btn btn-primary btn-lg">edit</a>
+        </span>
+        <span>
+            <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}" class="btn btn-warning btn-lg">delete</a>
+        </span>  
+
     </div>
-    <div class="itemDesc">
-            <h1>{{category_name}} -- {{itempage.t_itemName}}</h1>
-            <p>{{itempage.t_itemDescription}}</p>
-            <p>
-                <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}">edit</a> | <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}">delete</a>
-            </p>
-            
-    </div>
-</body>
-</html>
+
+
+
+{% endblock %}

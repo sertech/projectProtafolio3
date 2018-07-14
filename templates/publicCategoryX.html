@@ -1,50 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Catalog App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .content, .sidebar{
-            display: inline-block;
-        }
-        #top_title{
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-</head>
-<body>
-        <div class="top_banner" style="background-color:cadetblue">
-                <h1 id="top_title"> 
-                    <span>Catalog App Specific category</span>      
-                    <a href="{{url_for('login')}}">login</a>
-                </h1>
-            </div>
-    
-    <div class="container">
-        <div class="content">
-            <h1>Categories</h1>
-            {% for htmlCategory in catpageCategories %}
-                <p>
-                    <a href="{{url_for('catPage', category_name=htmlCategory.t_catName)}}">{{htmlCategory.t_catName}}</a>
-                </p>
-            {% endfor %}            
+{% extends "startPublic.html" %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <h2>Categories</h2>
+            <ul class="nav nav-pills nav-stacked">
+                {% for htmlCategory in catpageCategories %}
+                    <p>
+                        <a href="{{url_for('catPage', category_name=htmlCategory.t_catName)}}">{{htmlCategory.t_catName}}</a>
+                    </p>
+                {% endfor %}    
+
+            </ul>
+
         </div>
-        <div class="sidebar">
-            <h1>{{catpageCatName}} ({{t_items}} items)</h1>
-            {% for item in catpageItems %}
-                <p>
-                <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}">{{item.t_itemName}}</a>
-                {% for cati in catpageCategories %}
-                    {% if cati.t_id == item.t_catId %}
-                    ({{cati.t_catName}})
-                    {% endif %}
+
+        <div class="col-sm-9">
+
+            <h2>{{catpageCatName}} ({{t_items}} items)</h2>
+            <div class="list-group">
+
+                {% for item in catpageItems %}
+
+                    <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}" class="list-group-item">{{item.t_itemName}} 
+                        {% for cati in catpageCategories %}
+                            {% if cati.t_id == item.t_catId %}
+                            
+                            <span class="badge">({{cati.t_catName}})</span>
+                                
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </a>
                 {% endfor %}
-                </p>
-            {% endfor %}
+
+            </div>
+
         </div>
     </div>
-</body>
-</html>
+</div>
+
+        
+
+{% endblock %}
+
