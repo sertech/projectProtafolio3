@@ -4,6 +4,7 @@
 
 
     <h2>Category: {{category_name}}</h2>
+
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">{{itempage.t_itemName}}</div>
@@ -13,12 +14,23 @@
 
         <br>
 
-        <span>
-            <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}" class="btn btn-primary btn-lg">edit</a>
-        </span>
-        <span>
-            <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}" class="btn btn-warning btn-lg">delete</a>
-        </span>  
+        {% if user_id == itempage.t_userId %}
+            <span>
+                <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}" class="btn btn-primary btn-lg">edit</a>
+            </span>
+            <span>
+                <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}" class="btn btn-warning btn-lg ">delete</a>
+            </span>  
+        {% else %}
+            <span>
+                <a href="{{url_for('editItemPage', item_name=itempage.t_itemName)}}" class="btn btn-primary btn-lg isDisable">edit</a>
+            </span>
+            <span>
+                <a href="{{url_for('deleteItemPage',item_name=itempage.t_itemName)}}" class="btn btn-warning btn-lg isDisable">delete</a>
+            </span> 
+        {% endif %}
+
+        
 
     </div>
 

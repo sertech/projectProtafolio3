@@ -1,56 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        textarea {
-            vertical-align: top;
-        }
-        .content, .sidebar{
-            display: inline-block;
-        }
-        #top_title{
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-    
-</head>
-<body>
-    <div class="top_banner" style="background-color:cadetblue">
-        <h1 id="top_title"> 
-            <span>Catalog App</span>      
-            <span>
-                    {{current_user}} |
-                    <a href="{{url_for('logout')}}">logout</a>
-            </span>
-        </h1>
-    </div>
-    <h1>New Item for: {{current_cat}}</h1>
+{% extends "startPrivate.html" %}
+{% block content %}
    
-    <form action="{{url_for('newItemPage', category_name=current_cat)}}" method="post">
-        <fieldset>
-            <legend>Add new item</legend>
-            <p>
-                <label for="i_name">New item name</label> 
-                <input type="text" id="i_name" name="item_name" placeholder="item name">
-            </p>
-            
-            <p>
-                <label for="i_description">New item description</label> 
-                <textarea name="i_description" cols="70" rows="10"></textarea>
-            </p>
-            
-            <input type="submit" value="Submit">
-        </fieldset>
+<div class="panel-group">
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Add new item page</div>
+        <div class="panel-body">
+            <form action="{{url_for('newItemPage', category_name=current_cat)}}" method="post">
         
-    </form>
+                <div class="form-group">
+        
+                    <label for="i_name">New item name</label>
+                    <input type="text" class="form-control" id="i_name" name="item_name" placeholder="item name">
+        
+                </div>
+        
+                <div class="form-group">
+                    <label for="i_description">New item description</label>
+                    <textarea name="i_description" cols="70" rows="10" class="form-control"></textarea>
+                </div>
+        
+                <input type="submit" class="btn btn-primary" value="Submit">
+        
+        
+            </form>
+        
+        </div>
+    </div>
+
+</div>
     
-</body>
-</html>
+
+{% endblock %}
 
  <!-- label uses the id or name to be corretcly linked
 

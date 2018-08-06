@@ -14,7 +14,7 @@
     <!-- 2 load Google CDN (Content Delivery Network)-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- 3 load the client ID-->
+    <!-- 3 load the client ID and Initialize the GoogleAuth object-->
     <script>
         gapi.load('auth2', function(){
             auth2 = gapi.auth2.init({
@@ -152,7 +152,7 @@
         </div>
     </div>
     
-<!-- ______________________end local login___________________________________--> 
+<!-- ______________________end local login_______________________________--> 
     
     <fieldset>
         <legend>METHOD 1 google sign-in</legend>
@@ -171,12 +171,33 @@
         </div>
     </fieldset>
     <br>
-    
+    <script>
+        function onSignIn(googleUser)
+        {
+            var profile=googleUser.getBasicProfile();
+            // j query part to target the google button
+            $(".g-signin2").css("display","none");
+            $(".userdata").css("display",'block'); 
+            $("#pic").attr('src',profile.getImageUrl());
+            $("#email").text(profile.getEmail());
 
+        }
+        function signOut()
+        {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function(){
+                alert("you have been successfully signed out");
+                $(".g-signin2").css("display","block");
+                $(".userdata").css("display",'none');
+
+            });
+        }
+    </script>
+    <!-- end example login custom button -->
     <fieldset>
         <legend>UDACITY google sign-in method</legend>
         <div id="result">uda login method</div>
-        <button class="g-signin2" id="signinButton">Google sign-in</button>
+        <button class="g-signin2" id="signinButton">Sign in with Google</button>
         <script>
             $('#signinButton').click(function(){
                 auth2.grantOfflineAccess({'redirect_uri':'postmessage'}).then(signInCallback);
@@ -186,18 +207,36 @@
 
         <!-- Google sign in CODE-->
         <script>
-            function signInCallback(json){
-                console.log('funtion signInCallback(json) this json');
+            function signInCallback(json) {
+                console.log('inside callback function');
                 console.log(json);
                 // authResult = JSON.parse(json);
                 authResult = json;
-                console.log('contents of authResult = json')
-                console.log(authResult)
-                if(authResult['code']){
-                    // hide the sign in button
-                    $('#signinButton').attr('style', 'display:none');
-                    // show the one time code
-                    $('#result').html('One time auth code from google:</br>' + authResult['code'] + '');
+                if (authResult['code']) {
+                    // hide the sign-in button now that the user is authorized, for example:
+                    console.log('the code is in authResult hidding the google button')
+                    $('#signinButton').attr('style', 'display: none');
+                    $('#result').html('One-Time Auth Code:</br>' + authResult['code'] + '')
+                    // send the code to the server
+                    console.log('going to send the AJAX thingy')
+                    $.ajax({
+                        type: 'POST',
+                        url: '/oauth/google',
+                        processData: false,
+                        data: authResult['code'],
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            // Handle or verify the server response if neccessary.
+                            if (result) {
+                                $('#result').html('Login Successful!</br>' + result + '')
+                            } else if (authResult['error']) {
+                                console.log('There was an error: ' + authResult['error']);
+                            } else {
+                                $('#result').html('Failed to make a server-side call. Check yout configuration and console');
+                            }
+                        }
+                    });
+                    console.log('the AJAX thing sended')
                 }
             }
         </script>

@@ -15,6 +15,29 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!--___________________google sign-in prerequisites __________________-->
+    <!-- 1 Load the Google Platform Library -->
+    <script src="https://apis.google.com/js/platform.js?onload=start"></script>
+    <!-- 2 load Google CDN (Content Delivery Network)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 3 load the client ID and Initialize the GoogleAuth object-->
+    <script>
+
+        gapi.load('auth2', function(){
+            auth2 = gapi.auth2.init({
+                client_id:'187369319178-db3ouuu8aup2phh4q2iujmblfobn9r6j.apps.googleusercontent.com'
+            });
+        }); 
+
+    </script>
+
+    <script>
+            window.onbeforeunload = function(e){
+                gapi.auth2.getAuthInstance().signOut();
+                };
+    </script>
+
+
     <style>
         * {
             box-sizing: border-box;
@@ -75,9 +98,11 @@
         h1 {
             display: inline;
         }
-        .container{
-            max-width: 750px;
+
+        .container {
+            max-width: 800px;
         }
+
         /* Set black background color, white text and some padding */
     </style>
 </head>
@@ -91,66 +116,133 @@
     </div>
 
     <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Login</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form action="{{url_for('login', provider='local')}}" method="POST">
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="usermail" required>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    
+                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="userpass" required>
+                                    
+                                </div>
 
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Login</h4>
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal" action="{{url_for('login')}}" method="POST">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Email:</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="usermail" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="pwd">Password:</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="userpass" required>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    
+                                </div>
+                            </form>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </div>
                         </div>
-                    </form>
-
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>Register</h4>
-                </div>
-                <div class="panel-body">
-                    <form action="{{url_for('new_user')}}" method="post">
-                        <div class="form-group">
-                            <label for="usr">Name:</label>
-                            <input type="text" class="form-control" id="usr" name="newusername" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">email</label>
-                            <input type="email" class="form-control" id="usr" name="newusermail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">picture</label>
-                            <input type="text" class="form-control" id="usr" placeholder="No Image module set yet" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Password:</label>
-                            <input type="password" class="form-control" id="pwd" name="newuserpass" required>
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
+                    </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Login with Google</h4>
+                    </div>
+                    <div class="panel-body">
+                        <!-- google signin button  and script-->
+                        <button class="g-signin2" id="signinButton">Sign in with Google</button>
+                        <div id="result">login result</div>
+                        <script>
+                            $('#signinButton').click(function(){
+                                // signInCallback defined later
+                                auth2.grantOfflineAccess({'redirect_uri':'postmessage'}).then(signInCallback);
+                            });                            
+                        </script>
+                        <!-- google signin button  and script-->
+                        <!-- Google sign in CODE signInCallback-->
+                        <script>
+                            function signInCallback(authResult){
+                                // authResult is a json object
+                                console.log('signInCallback code recieved');
+                                console.log(authResult);
+                                if(authResult['code']){
+                                    // Hide the sign-in button now that the user is authorized
+                                    $('#signinButton').attr('style', 'display: none');
+                                    //$('#result').html('One time auth code: </br>' + authResult['code'] + '');
 
+                                    // send code to the server
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/clientOAuth/google',
+                                        processData: false,
+                                        // Always include an `X-Requested-With` header in every AJAX request,
+                                        // to protect against CSRF attacks.
+                                        headers: {
+                                            'X-Requested-With': 'XMLHttpRequest'
+                                        },
+                                        data: authResult['code'],
+                                        contentType: 'application/octet-stream; charset=utf-8',
+                                        success: function(result) {
+                                            // handle or verify the server response
+                                            console.log('result')
+                                            console.log(result)
+                                            if (result){
+                                                $('#result').html('Login Successful!</br>' + result + '</br>redirecting......')
+                                                setTimeout(function(){
+                                                    window.location.href = "/CatalogApp";
+                                                },3000);
+                                            } else if (authResult['error']){
+                                                console.log('there was an error: ' + authResult['error']);
+                                            } else {
+                                                $('#result').html('Failed to make a server-side call. Chack your configuration and console');
+                                            }
+
+                                        }
+                                    });
+                                    console.log('the ajax thing sended')
+                                }
+
+                            }
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Register</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form action="{{url_for('new_user')}}" method="post">
+                            <div class="form-group">
+                                <label for="usr">Name:</label>
+                                <input type="text" class="form-control" id="usr" name="newusername" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">email</label>
+                                <input type="email" class="form-control" id="usr" name="newusermail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">picture</label>
+                                <input type="text" class="form-control" id="usr" placeholder="No Image module set yet" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd" name="newuserpass" required>
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
     </div>
 
 

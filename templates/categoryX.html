@@ -13,6 +13,14 @@
                     </p>
                 {% endfor %} 
             </ul>
+            <ul class="list-group">
+                    <li class="list-group-item list-group-item-success">          
+                        <p><span class="label label-success">&#10004</span> marks item created by you</p>
+                    </li>
+                    <li class="list-group-item list-group-item-danger">
+                    <p><span class="label label-danger">&#10006</span> marks items created by others</p>
+                    </li>
+            </ul>
             
         </div>
 
@@ -23,7 +31,13 @@
             <div class="list-group">
                 {% for item in catpageItems %}
                     
-                    <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}" class="list-group-item">{{item.t_itemName}}
+                    <a href="{{url_for('itemPage',category_name=catpageCatName,item_name=item.t_itemName)}}" class="list-group-item">
+                        {% if item.t_userId == user_id %}
+                            <span class="label label-success">&#10004</span>
+                        {% else %}
+                            <span class="label label-danger">&#10006</span> 
+                        {% endif%}
+                        {{item.t_itemName}}
                         {% for cati in catpageCategories %}
                             {% if cati.t_id == item.t_catId %}
                                 <span class="badge">({{cati.t_catName}})</span>

@@ -1,5 +1,5 @@
 # ---------------python functinality imports----------------------------------
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g, abort
+from flask import (Flask, render_template, request, redirect, jsonify, url_for, flash, g, abort)
 from flask import session as login_session
 import random
 import string
@@ -7,23 +7,23 @@ import httplib2
 import json
 from flask import make_response
 import requests
-#-----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
-# ----------- google sign in ----------------------------- 
+# ----------- google sign in -----------------------------
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 # --------------------------------------------------------
 
-#------------------------- DB imports---------------------
+# ------------------------- DB imports---------------------
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
 from db_setup import Base, User, Category, Item
-#---------------------------------------------------------
+# ---------------------------------------------------------
 
-#----- login and security imports-------------------------
+# ----- login and security imports-------------------------
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
-#---------------------------------------------------------
+# ---------------------------------------------------------
 
 app = Flask(__name__)
 
@@ -33,7 +33,8 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-#---------------------------------------------------------
+# ---------------------------------------------------------
+
 
 @auth.verify_password
 def verify_password(userEmail, password):
@@ -42,6 +43,7 @@ def verify_password(userEmail, password):
         return False
     g.user = user
     return True
+
 
 @app.route('/')
 @app.route('/CatalogApp')
