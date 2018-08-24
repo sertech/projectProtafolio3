@@ -114,6 +114,20 @@
         </a>
 
     </div>
+    
+    <div class="flash">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in mesagges %}
+                        <li>
+                            <strong> {{message}} </strong>
+                        </li>                            
+                    {% endfor %}
+                </ul>
+            {% endif %}                
+        {% endwith %}
+    </div>
 
     <div class="container">
         <div class="row">
@@ -149,6 +163,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -214,34 +229,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Register</h4>
-                    </div>
-                    <div class="panel-body">
-                        <form action="{{url_for('new_user')}}" method="post">
-                            <div class="form-group">
-                                <label for="usr">Name:</label>
-                                <input type="text" class="form-control" id="usr" name="newusername" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="usr">email</label>
-                                <input type="email" class="form-control" id="usr" name="newusermail" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="usr">picture</label>
-                                <input type="text" class="form-control" id="usr" placeholder="No Image module set yet" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="pwd">Password:</label>
-                                <input type="password" class="form-control" id="pwd" name="newuserpass" required>
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 

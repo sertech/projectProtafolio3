@@ -11,8 +11,15 @@
                         <a href="{{url_for('catPage', category_name=htmlCategory.t_catName)}}">{{htmlCategory.t_catName}}</a>
                     </p>
                 {% endfor %}    
-
             </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">          
+                    <p><span class="label label-success">&#10004</span> marks item created by you</p>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                <p><span class="label label-danger">&#10006</span> marks items created by others</p>
+                </li>
+        </ul>
 
         </div>
 

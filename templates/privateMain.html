@@ -26,6 +26,21 @@
         <div class="col-sm-9">
 
             <h2>latest items</h2>
+
+            <div class='flash'>
+                <p>flash</p>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li>
+                                    <strong> {{ message }} </strong>
+                                </li>                            
+                            {% endfor %}
+                        </ul>
+                    {% endif %}                
+                {% endwith %}
+            </div>
             
             <!-- <h3>user id: {{user_id}}</h3> 
             <p class="text-success"><span class="label label-success">&#10004</span> marks item created by you</p>
