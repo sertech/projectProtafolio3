@@ -454,7 +454,6 @@ def editItemPage(item_name):
                 catx = cati
 
         if request.method == 'POST':
-
             # values received
 
             edit_item.t_itemName = bleach.clean(request.form['newItemName'],
