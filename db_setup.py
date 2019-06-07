@@ -47,13 +47,13 @@ class User(Base):
         self.t_password_hash = pwd_context.encrypt(password)
 
     def verify_password(self, password):
-        """This function checks a recieved password with a stored hash
+        """This function checks a received password with a stored hash
 
         Arguments:
             password {string} -- A string containing the password sended by another source
 
         Returns:
-            boolean -- if the hash matches the password recieved returns true if not false
+            boolean -- if the hash matches the password received returns true if not false
         """
 
         return pwd_context.verify(password, self.t_password_hash)
